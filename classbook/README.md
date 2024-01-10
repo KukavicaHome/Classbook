@@ -1,8 +1,8 @@
-# capstone Final-Project
+# slassbook Final-Project
 
 Web Programming with Python and JavaScript
 
-#### Video Demo:  <URL https://www.youtube.com/watch?v=NsUgamC6AD0>
+#### Video Demo:  <URL  >
 
 # Distinctiveness and Complexity
 This project was conceived as a development and consumption platform intended for teachers and students.
@@ -11,8 +11,6 @@ The project is made up of 3 applications: mysite, class and staff.
 -the mysite application is used for registration and logging in and connecting the other two applications.
 -staff application is used for creating projects by teachers. The project includes a Youtube url, a pdf file as resources and a quiz for the project.
 -class app is a consumer application and is used by students to access learning content: video and pdf file and quizes to check knowledge.
-
-The special feature of this project compared to the ones we have done so far is that it enables a connection to Youtube and uploading a pdf file.
 
 The application is simply defined and I intend to use it as a teacher in an elementary school. It is easy to upgrade the application and perhaps add new features.
 
