@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Your submissions
+{% endblock %}
+
+{% block content %}
+
+
+{% if submissions %}
+<div class="mb-5 small text-center text-muted">
+    <h4 id="submission-info">{{ name }} , your submitted quizzes and the points are:</h4>
+</div>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Quiz</th>
+            <th>Points</th>
+            <th>Date of submission</th>
+        </tr>
+    </thead>
+    {% for submission in submissions %}
+    <tbody>
+        <tr>
+            <td> {{ submission.project.projectName }}</td>
+            <td> {{ submission.points }} of {{ submission.max_points }}</td>
+            <td> {{ submission.date_created }}</td>
+        </tr>
+    </tbody>
+    {% endfor %}
+</table>
+{% else %}
+<div class="mb-5 small text-center text-muted">
+    <h4 id="submission-info">{{ name }} </h4>
+</div>
+<div class="alert  alert-dismissible fade show {% if message.tags %}{{ message.tags }}{% else %}alert-primary{% endif %}" role="alert">  
+  <h2>Submission list is empty!!!</h2> 
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endif %}
+{% endblock %}

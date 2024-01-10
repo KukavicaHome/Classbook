@@ -1,0 +1,245 @@
+.card {
+  margin: 0 auto; /* Added */
+  float: none; /* Added */
+  margin-bottom: 10px; /* Added */
+}
+.info_box{
+  top: 200px;
+}
+.quiz_box{
+  top: 10px;
+}
+.result_box{
+  top: 130px;
+}
+.disabled{
+    pointer-events: none;
+  }
+.success:hover {background-color: #46a049;}
+
+.btns:hover {
+    background-color: rgb(10, 125, 125);
+    cursor: pointer;
+  }
+
+.btns{
+    background-color: gray; /* Gray */
+    border: none;
+    color: white;
+    padding: 3px 7px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-bottom: 3px;
+  }
+#label {
+  background-color: #04AA6D;
+  border-radius: 1mm;
+}
+.correct{
+  color: rgb(56, 51, 51);
+  background-color: #04AA6D;
+  border: 1px solid #c3e6cb;
+  font-family: monospace;
+  font-weight: bold;
+}
+
+.incorrect{
+    color: #721c24;
+    background: #f8d7da;
+    border: 1px solid #f5c6cb;
+    font-family: monospace;
+    font-weight: bolder;
+}
+
+  .quiz_box .card-header{
+    padding: 0px;
+  }
+
+.card-header .timer{
+  padding-top: 0px;
+  margin-top: 0px;
+}
+
+.que_text{
+    padding-top: 15px;
+    padding-bottom: 0px;
+    font-family: 'Times New Roman', Times, serif;
+    color: #0000c5;
+    font-size: larger;
+    text-align: center;
+  }
+
+#question{
+  padding-top: 0px;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+}
+
+.inline{
+    display: flex;
+    flex-direction: row;
+}
+.picture{
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: min-content;
+}
+.next-question{
+    padding-right: 10px;
+    padding-top: 5px;
+    font-weight: bolder;
+}
+.timer{
+  margin-top: 4px;
+}
+.timer_sec{
+  font-size: 18px;
+  font-weight: 500;
+  height: 30px;
+  width: 45px;
+  color: #fff;
+  border-radius: 5px;
+  line-height: 30px;
+  text-align: center;
+  background: #343a40;
+  border: 1px solid #343a40;
+  user-select: none;
+  }
+
+.result_box .icon {
+    font-size: 70px;
+    color: #007bff;
+    margin-bottom: 10px;
+
+}
+
+.score_text{
+  font-size: larger;
+  font-weight: bolder;
+}
+
+.option_list .icon {
+  height: 26px;
+  width: 26px;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  text-align: center;
+  font-size: 13px;
+  pointer-events: none;
+  transition: all 0.3s ease;
+  line-height: 24px;
+  float:right
+}
+
+.card-footer .btn{
+    height: min-content;
+  }
+.icon.tick{
+    color: #23903c;
+    border-color: #23903c;
+    background: #d4edda;
+}
+
+.icon.cross{
+  color: #a42834;
+  background: #f8d7da;
+  border-color: #a42834;
+}
+
+@media only screen and (max-width: 600px) {
+  .que_text{
+    padding-top: 15px;
+    padding-bottom: 0px;
+    font-family: 'Times New Roman', Times, serif;
+    color: #0000c5;
+    font-size: medium;
+    text-align: center;
+  }
+
+  .btns{
+    background-color: gray; /* Gray */
+    border: none;
+    color: white;
+    padding: 3px 7px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin-bottom: 3px;
+  }
+
+  .option_list .icon {
+    height: 20px;
+    width: 20px;
+    border: 2px solid transparent;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 13px;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    line-height: 20px;
+    float:right
+  }
+  .timer_sec{
+    font-size: 12px;
+    font-weight: 500;
+    height: 30px;
+    width: 25px;
+    color: #fff;
+    border-radius: 5px;
+    line-height: 30px;
+    text-align: center;
+    background: #343a40;
+    border: 1px solid #343a40;
+    user-select: none;
+    }
+ .btn{
+  width:max-content;
+  font-size: 12px;
+
+  text-align: center;
+ }
+  .card-footer {
+    font-size: 12px;
+  }
+
+  .card-text {
+    font-size: small;
+  }
+  .card-header{
+    font-size: medium;
+  }
+
+  #ime_kviza{
+    font-size: medium;
+  }
+  }
+  .info_box{
+    top: 20px;
+  }
+
+
+/*sakriti tekst na maloj sirini*/
+@media only screen and (max-width: 300px) {
+  div.next-question {
+    display: none;
+  }
+  .info_box{
+    top: 20px;
+  }
+}
+
+#is_student{
+  display: none;
+}
+
+#finish{
+  margin-top: 20px;
+}
+
+
+

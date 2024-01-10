@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+ 
+    {%if problem%}
+    <p><span>😷 </span> {{ problem }}</p> 
+    {% else %}
+    <div class="greska">
+        <p><span>😷 </span> Server nije u mogućnosti da pročita bazu podataka.</p>    
+    </div>
+    {% endif%}
+
+{% endblock content %}

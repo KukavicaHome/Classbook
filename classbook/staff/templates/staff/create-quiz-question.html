@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+{% load embed_video_tags %}
+{% load static %}
+
+{% block content %}
+<!--csrf Za POST asihrono-->
+<div class="debugging" hidden>
+  <p id="csrf">{% csrf_token %}</p>
+</div>
+
+<div class="message" id="poruka"></div>
+
+<div class="questions" id="questions_div">
+  <div id="message_div">
+    {% if message %}
+    <div class="alert alert-dismissible fade show {% if message %}{{ message }}{% else %}alert-primary{% endif %}"
+      role="alert">
+      <p style="color: brown;">{{message}}</p>
+      <button type="button" id="alert_btn" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}
+  </div>
+  
+  <div class="text-end" id="">
+    {% if quiz_nmb > 1 %}
+      <button class="btn-display-hide" id="" type="button" onclick="playQuiz()">Play <span id="quiz-samp">Quiz</span> </button>
+  {% endif %}
+
+  {%if quiz_nmb > 5 %}
+    {% if not quiz_published %}
+    <button class="btn-display-hide publish-button" id="publish_quiz_{{project_id}}" style="color: green;"
+      value="{{project_id}}" onclick="publish_unpulish_Quiz(value)">Quiz Publish</button>
+    {% else %}
+    <button class="btn-display-hide publish-button" id="publish_quiz_{{project_id}}" style="color: brown;"
+      value="{{project_id}}" onclick="publish_unpulish_Quiz(value)">Quiz Unublish</button>
+    {% endif %}
+  {% endif %}
+
+    <button class="btn-display-hide" id="go-home" type="button" onclick="goHome()">Go to Project</button>
+  </div>
+ 
+  {% if not project_quiz %}
+  <div
+    class="alert  alert-dismissible fade show {% if message.tags %}{{ message.tags }}{% else %}alert-primary{% endif %}"
+    role="alert" id="quiz_publish_condition">
+    <h6>Project list is empty!!! To be able to publish a quiz, you need to have a set of at least 5 questions for each project.
+      
+    </h6>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  {% endif %}
+  <div class="questions-buttons">
+    <button class="btn-display-hide" id="create_quiz_question" type="button" onclick="create_quiz_question()">Create a
+      question for quiz #{{ quiz_nmb }}</button>
+  </div>
+  
+
+<!--imamo posts_of_the_page , jer hocemo da paginatoriramo kroz stranicu, project_quiz ima isto sto i questions-->
+  {% if project_quiz %}
+  {% for question in posts_of_the_page %} 
+  <div class="qustion_div" id="qustion_div_{{ question.id }}"> 
+    <p class="question_set" id="question_{{question.id}}"><span class="question_spam_1">Question : </span> {{question.question}}</p>
+    <p class="question_set" id="answer_{{question.id}}"><span class="question_spam_1">Answer :</span> {{question.answer}}</p>
+    <p class="question_set" id="option1_{{question.id}}"><span class="question_spam_1">Option_1: </span> {{question.option_1}}</p>
+    <p class="question_set" id="option2_{{question.id}}"><span class="question_spam_1">Option_2: </span> {{question.option_2}}</p>
+    <p class="question_set" id="option3_{{question.id}}"><span class="question_spam_1">Option_3: </span> {{question.option_3}}</p>
+    <div class="questions-buttons">
+      <!--button za iniciranje editovanje pitanja-->
+      <button class="btn-display-hide btn btn-warning" id="{{question.id}}" type="button" value="{{quiz_nmb}}"
+        onclick="edtiQuestion(id, value)">Edit Question</button>
+
+
+      <!-- Button trigger modal delete button za iniciranje brisanje pitanja-->
+      <button type="button" class="btn-clipboard btn btn-danger" data-bs-toggle="modal"
+        data-bs-target="#modal_delete_post_{{ question.id }}">
+        Delete Question
+      </button>
+      <!-- Modal za delite-->
+
+      <div class="modal fade" id="modal_delete_post_{{ question.id }}" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p id="modal-body-question">Do you really want to delete the question?</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-danger" value="{{question.id}}" id=""
+                onclick="delete_Question(value)">Delete Question</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+  {% endif %}
+</div>
+ 
+ <!--div i Forma za kreiranje pitanja-->
+<div class="border-info-subtle" id="question-form-div">
+  <h6 id="question_nmb">Question <span class="question_nmb_project_name">#{{ quiz_nmb }}</span>, project name: <span
+      class="question_nmb_project_name">{{ projectName }}</span></h6>
+     
+  <form class="row g-3 needs-validation " id="form" method="POST" action="{% url 'staff:create-add-question' project_id %}">
+    {% csrf_token %}
+    {% include 'staff/form/question-form.html' %}
+    <div class="questions-buttons">
+      <button type="submit" id="" class="btn btn-primary mb-3 create-update-project">Add to Quiz</button>
+      <button type="button" id="" class="btn btn-secondary mb-3 create-update-project"
+        onclick="cancel_Submit_Question()">Cancel</button>
+    </div>
+  </form>
+</div>
+
+ 
+<nav aria-label="Page navigation example">
+  <ul class="pagination d-flex justify-content-center">
+  {% if posts_of_the_page.has_previous %}
+    <li class="page-item"><a class="page-link" href="?page={{posts_of_the_page.previous_page_number}}">Previous</a></li>
+  {% endif %}
+
+  {% if posts_of_the_page.has_next %}
+    <li class="page-item"><a class="page-link"  href="?page={{posts_of_the_page.next_page_number}}">Next</a></li>
+    {% endif %}
+  </ul>
+</nav>
+ 
+{% block js %}
+<script src="{% static 'staff/js/create-quiz.js' %}"></script>
+<script src="{% static 'staff/js/publish_unpublish.js' %}"></script>
+{% endblock js %}
+{% endblock content %}

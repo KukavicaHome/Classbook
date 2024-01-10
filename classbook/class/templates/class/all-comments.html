@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block content %}
+<div class="text-end">
+  <button class="btn-display-hide" id="go-home-comments" type="button" value=""  onclick="go_to_Project()">Go to Project</button>
+</div>
+
+<div id="message_div">
+  {% if message %}
+  <div class="alert alert-dismissible fade show {% if message %}{{ message }}{% else %}alert-primary{% endif %}"
+    role="alert">
+    <p style="color: brown;">{{message}}</p>
+    <button type="button" id="alert_btn" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  {% endif %}
+</div>
+
+<h3>All Comments</h3>
+<div id="comment-post-div">
+  <form id="form" method="POST" action="{% url 'class:add-comment' project_id %}">
+    {% csrf_token %}
+
+    <div class="">
+      <textarea class="form-control" id="comment_textarea" rows="1" name="content" maxlength="200"
+        placeholder="Write a Comment"></textarea>
+      <div class="invalid-feedback-client" id="comment_alert"></div>
+      <button type="submit" class="btn-clipboard form-disable" id="post_btn" data-bs-original-title="">Submit
+        Comment</button>
+    </div>
+  </form>
+</div>
+<hr>
+ 
+<div class="all-posts">
+  {% for comment in posts_of_the_page %}
+  <div class="comment-div mx-1" id="comment-div-{{comment.id}}">
+    <!--Users should be able to click an “Edit” button or link on any of their own posts to edit that post.-->
+    <div id="user-name">{{ comment.user.username }} </div>
+    <div class="content" id="content_{{ comment.id }}">
+      {{ comment.content}}
+    </div>
+    <div>
+      {% if user.username == comment.user.username %}
+      <!-- Button trigger modal edit-->
+      <button type="button" class="btn-clipboard" id="edit-comment-btn" data-bs-toggle="modal"
+        data-bs-target="#modal_edit_post_{{ comment.id }}">
+        Edit comment
+      </button>
+      <!-- Button trigger modal delete -->
+      <button type="button" class="btn-clipboard delete-button" data-bs-toggle="modal"
+        data-bs-target="#modal_delete_post_{{ comment.id }}">
+        Delete comment
+      </button>
+      <!-- Modal za delite-->
+
+      <div class="modal fade" id="modal_delete_post_{{ comment.id }}" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p id="modal-body-question">Do you really want to delete the comment?</p> 
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-danger" value="{{comment.id}}" id="{{project_id}}"
+                onclick="delete_Comment(value, id)">Delete comment</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Modal za edit-->
+      <div class="modal fade" id="modal_edit_post_{{ comment.id }}" data-bs-backdrop="static" data-bs-keyboard="false"
+        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="staticBackdropLabel">Edit Comment</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" value="{{comment.id}}" onclick="correct_Value(value)"></button>
+            </div>
+            <div class="modal-body" id="modal-body-{{ comment.id }}">
+              <textarea name="content" id="text-aria_{{ comment.id }}" cols="50"
+                rows="3"> {{ comment.content }}</textarea>
+                <div class="invalid-feedback-client" id="comment_alert_{{comment.id}}"></div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" value="{{comment.id}}" onclick="correct_Value(value)">Close</button>
+              <button type="button" class="btn btn-primary" value="{{comment.id}}"
+                onclick="edit_Comment(value)">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+
+  </div>
+  {% empty %}
+  <div class="alert alert-warning" role="alert">
+    <h6>There is no comments!!!</h6>
+  </div>
+  {% endfor %}
+</div>
+<nav aria-label="Page navigation example">
+  <ul class="pagination d-flex justify-content-center">
+    {% if posts_of_the_page.has_previous %}
+    <li class="page-item"><a class="page-link" href="?page={{posts_of_the_page.previous_page_number}}">Previous</a></li>
+    {% endif %}
+    {% if posts_of_the_page.has_next %}
+    <li class="page-item"><a class="page-link" href="?page={{posts_of_the_page.next_page_number}}">Next</a></li>
+    {% endif %}
+  </ul>
+</nav>
+
+{% block js %}
+<script src="{% static 'class/js/all-comments.js' %}"></script>
+<!--<script src="{% static 'network/likes_handeling.js' %}"></script>-->
+{% endblock %}
+
+{% endblock %}

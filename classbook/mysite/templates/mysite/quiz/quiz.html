@@ -1,0 +1,105 @@
+
+ {% extends "base.html" %}
+ {% load static %}
+
+{% block title %}
+    Igraj
+{% endblock title %}
+
+{% block link %}
+<link href="{% static 'mysite/css/quiz.css' %}"   rel="stylesheet">
+<link href="/static/css/styles-quiz.css" rel="stylesheet">
+        <!-- FontAweome CDN Link for Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+{% endblock link %}
+
+{% block content %}
+<!--csrf Za POST asihrono-->
+<div class="debugging" hidden>
+    <p id="csrf">{% csrf_token %}</p>
+  </div>
+<!--Info Box-->
+<div class="card border-info mb-3 align-middle mx-auto info_box"   id="begin">
+    <h5 class="card-header "><center>Quiz rules</center> </h5>
+    <div class="card-body">
+        <div class="card-text">1. You only have <span id="vrijeme_pitanja">30</span> seconds for each question.</div>
+        <div class="card-text">2. Once you have selected an answer, it cannot be changed.</div>
+        <div class="card-text">3. When the time runs out, you can no longer choose any option.</div>
+        <div class="card-text">4. You will get points based on your correct answers.</div>
+        <div class="card-text">5.At the end of the Quiz, you can: a) submit your result, b) you can leave the Quiz, c) repeat the Quiz.</div>
+    </div>
+    <div class="card-footer d-flex"  >
+        <button type="button" class="btn btn-primary mx-auto" id="start_button">Start Quiz</button>
+    </div>     
+</div>
+
+  <!--Quiz Box-->
+  <div class="card  mb-3 border-primary mx-auto quiz_box" style="width: 90%;display:none" id="igra">
+    <div class="card-header picture_holder">
+        <!--Info za loading image-->
+        
+        <div class=" ">
+              <!--Here I've inserted picture for question -->
+        </div>
+    
+        <div class="que_text">
+            <!-- Here I've inserted question from JavaScript -->
+            <p id="question">Pitanje </p>
+        </div>
+    </div>
+    
+    <div class="card-body">
+        <section>
+            <div class="option_list">
+                <!-- Here I've inserted options from JavaScript -->   
+            </div>
+        </section>  
+    </div>
+    <div class="card-footer text-muted inline mx-auto">
+        <div class="timer  mx-auto">
+            <div class="timer_sec">15</div> 
+        </div>
+        
+        <div class="total_que mx-auto">
+            <!-- Here I've inserted Question Count Number from JavaScript -->
+            <div class="next-question">
+                <p><span id="nmb_of_question">0</span>. of <span class="br_pitanja">5</span> Questions</p>
+            </div>
+        </div>
+        <button class="btn btn-success res-btn" id="next_finish_button">Next Question</button>          
+    </div>  
+</div>
+
+<!-- Result Box -->
+<div id="is_student">{{is_student}}</div>
+<div class="card text-center border-info align-middle mx-auto " style="margin-top: 20px; width: 90%;display:none" id="finish">
+    <div class="card-header">
+        <div class="icon">
+            <i class="fas fa-user"></i>
+        </div>
+        <div class="complete_text">You have completed the quiz!</div>
+    </div>
+    <div class="card-body">
+        <div class="score_text">
+            <!-- Here I've inserted Score Result from JavaScript -->
+            <p>Your score:</p> 
+            <p><span id="score">0 </span> / <span id="br_svih_pitanja">5</span> </p> 
+        </div>
+    </div>
+    <div class="card-footer text-muted">
+        <div class="buttons">
+            <form action=" " method="get" style="display: inline-block;">
+                <button type="submit" class="btn btn-secondary exit_quiz res-btn">Leave Quiz</button>
+            </form>
+            <button class="btn btn-primary restart res-btn">Repeat Quiz</button>
+            <button class="btn btn-warning submit res-btn">Submit Result</button>
+            
+        </div>
+    </div>
+</div>
+{% block js %}
+<script src="{% static 'mysite/js/quiz.js' %}"></script>
+<!--<script src="{% static 'mysite/js/quiz.js' %}"></script>-->
+{% endblock js %}
+ 
+{% endblock %}

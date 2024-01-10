@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+ 
+<div class="mb-4 small text-center text-muted">
+    <h2>Welcome to Classbook!</h2>
+</div>
+
+{% if not user.is_staff %}
+
+<h5>You can <span><a href="{% url 'mysite:register-teacher' %}">Register as Teacher</a></span> or
+    <span><a href="{% url 'mysite:register-student' %}">Register as Student</a></span> or <span><a
+            href="{% url 'mysite:login' %}">Log In</a></span>.
+</h5>
+<h6>If you register and log in as a student, you can use the projects prepared by the teachers.
+    If you register and log in as a teacher, you can easily create projects that are intended for learning.</h6>
+
+{% endif %}
+{% endblock content %}

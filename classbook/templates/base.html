@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--za nalaganje nesigurne stranice http stranice-->
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <title>{% block title %}Classbook{% endblock %}</title>
+    
+    {% include 'base/css.html' %}
+    <style>
+      .bg-cfe {
+        background-color:#007cae !important;
+      }
+    </style>
+  </head>
+  <body>
+    {% include 'base/navbar.html' %}
+    {% include 'base/messages.html' %}
+
+    <div class="container-fluid">
+      {% block content %}
+
+      {% endblock %}
+
+    
+        </p></div></div></div>
+    {% include 'base/footer.html' %}
+
+    {% include 'base/js.html' %}
+  </body>
+</html>

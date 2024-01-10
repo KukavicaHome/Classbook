@@ -1,0 +1,61 @@
+<nav class="navbar navbar-dark navbar-expand-lg bg-cfe">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">Classbook</a>
+      <span>{{request.user.username}}</span>
+      <button class="navbar-toggler" style="background-color: #007cae; " type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" 
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+       
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          {% if request.user.is_anonymous %}
+
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'mysite:login' %}">Log In</a>
+        </li>
+        
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'mysite:register-student' %}">Register as Student</a>
+        </li>
+        
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'mysite:register-teacher' %}">Register as Teacher</a>
+        </li>
+          {% elif request.user.is_teacher %}
+ 
+          <li class="nav-item">
+            <!--<a class="nav-link" href="{% url 'staff:create-project' %}">Add Project</a>-->
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'staff:create-project' %}">Create Project</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'staff:projects' %}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'mysite:logout' %}">Log Out</a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'class:all-projects' %}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'class:submissions' %}">My Submissions</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " href="{% url 'mysite:logout' %}">Log Out</a>
+          </li>
+    
+          {% endif %}
+        </ul>
+        {% if request.user.is_authenticated and request.user.is_student %}
+        <form  method="GET" action="{% url 'class:project_search_view' %}"  class="d-flex" role="search">
+          <input name="q" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-secondary" type="submit">Search</button>
+        </form>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+  

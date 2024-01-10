@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load embed_video_tags %}
+{% load static %}
+
+{% block content %}
+<!--csrf Za POST asihrono-->
+<div class="debugging" hidden>
+  <p id="csrf">{% csrf_token %}</p>
+</div>
+
+<div id="message_div">
+  {% if message %}
+  <div class="alert alert-dismissible fade show {% if message %}{{ message }}{% else %}alert-primary{% endif %}"
+    role="alert">
+    <p style="color: brown;">{{message}}</p>
+    <button type="button" id="alert_btn" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  {% endif %}
+</div>
+ 
+ <!--div i Forma za kreiranje pitanja-->
+<div class="border-info-subtle" id="edit-question-form-div">
+  <h6 id="question_nmb">Edit Question <span class="question_nmb_project_name">#{{ question_id }}</span>, project name: <span
+      class="question_nmb_project_name">{{ projectName }}</span></h6>
+     
+  <form class="row g-3 needs-validation " id="form" method="POST" action="">
+    {% csrf_token %}
+    {% include 'staff/form/edit-question-form.html' %}
+    <div class="questions-buttons">
+      <button type="submit" id="" class="btn btn-primary mb-3 create-update-project">Edit Quiz</button>
+      <button type="button" id="" class="btn btn-secondary mb-3 create-update-project"
+        onclick="cancel_Submit_Question()">Cancel</button>
+    </div>
+  </form>
+</div>
+
+{% block js %}
+<script src="{% static 'staff/js/create-quiz.js' %}"></script>
+{% endblock js %}
+{% endblock content %}

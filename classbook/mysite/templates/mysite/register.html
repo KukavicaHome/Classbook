@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<!--csrf Za POST asihrono-->
+<div class="debugging" hidden>
+    <p id="csrf">{% csrf_token %}</p>
+</div>
+<div class="buttonHolder">
+    <h2>Register as {{status}}</h2>
+</div>
+
+
+<h3 style="color: red;" class="message">{{message}}</h3>
+
+<div class="border-info-subtle">
+    <form class="register_form" method="POST" action="{% url 'mysite:register-student-teacher' %}">
+        {% csrf_token %}
+        {% include 'mysite/form/register-tamplate.html' %}
+        <div class="buttonHolder">
+            <input class="btn btn-primary" type="submit" value="Register" >
+            <input class="btn btn-secondary" type="button" value="Cancel" onclick="cancel_Registeer_Login()">
+        </div>
+
+    </form>
+</div>
+
+<div class="vec-registriran">
+    Already have an account? <a href="{% url 'mysite:login' %}">Log In here.</a>
+</div>
+
+
+{% block js %}
+<script src="{% static 'mysite/js/register.js' %}"></script>
+{% endblock js %}
+
+{% endblock content%}

@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+{% load embed_video_tags %}
+{% load static %}
+
+{% block content %}
+
+<!--csrf Za POST asihrono-->
+<div class="debugging" hidden>
+  <p id="csrf">{% csrf_token %}</p>
+</div>
+
+
+<div class="message" id="poruka"></div>
+<!--Za youtube url-->
+<div id="navigation-buttons">
+  <div class="text-end">
+    {% if project.quiz_published %}
+    <button class="btn-display-hide" id="" type="button" onclick="playQuiz()">Play <span id="quiz-samp">Quiz</span> </button>
+    {% endif %}
+     
+    <button class="btn-display-hide" id="create-edit-quiz" type="button" onclick="createQuiz()">Create/Play/Edit/Publish/Unpublish <span id="quiz-samp">Quiz</span> </button>
+    <!-- Button trigger modal delete -->
+    <button type="button" class="btn-display-hide delete-button" data-bs-toggle="modal"
+      data-bs-target="#modal_delete_post_{{ project.id }}">
+      Delete Project
+    </button>
+    <!-- Modal za delite-->
+
+    <div class="modal fade" id="modal_delete_post_{{ project.id }}" tabindex="-1" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p id="modal-body-question">Do you really want to delete the project: {{project.projectName}}?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-danger" value="{{project.id}} " onclick="deleteProject(value)">Delete
+              project</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% if not project.project_published %}
+    <button class="publish-project-button" id="publish_{{project.id}}" style="color: green; "
+      value="{{project.id}}" onclick="publish_unpulish_Project(value)">Publish Project</button>
+    {% else %}
+    <button class="publish-project-button" id="publish_{{project.id}}" style="color: brown;"
+      value="{{project.id}}" onclick="publish_unpulish_Project(value)">Unublish Project</button>
+    {% endif %}
+
+  </div>
+</div>
+
+<!--poruka o updejtovanju-->
+{% if message %}
+<div class="alert alert-dismissible fade show {% if message %}{{ message }}{% else %}alert-primary{% endif %}"
+  role="alert">
+  <p info-alert>{{message}}</p>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endif %}
+<!-- The project tags: -->
+<div id="project_div" class="">
+
+  <div class="project-edit" id="projectName">
+    <h5>{{project.projectName}}</h5>
+    <div>
+      <button class="btn-display-hide btn-edit" id="btn_ediName" value="projectName" type="button"
+      onclick="edit_form_field(value)">Edit Project Name</button>
+    </div>
+   
+  </div>
+
+
+  <div class="project-edit">
+    {% if project.description %}
+    {{project.description}} <br>
+      <button class="btn-display-hide btn-edit" value="description" type="button" onclick="edit_form_field(value)">Edit
+        Description</button>
+        {% else %}
+        <button class="btn-display-hide btn-edit-add" value="description" type="button" onclick="edit_form_field(value)">Add
+          Description</button>
+        {% endif %}
+    
+   
+  </div>
+ 
+  <div class="project-edit-video">
+    {% video project.video as my_video %}
+    {% video my_video "medium" %}
+    {% endvideo %}
+    <button class="btn-display-hide btn-edit" id="" value="video" type="button" onclick="edit_form_field(value)">Edit
+      Video</button>
+  </div>
+
+
+  <div class="project-edit">
+    {% if project.pdf %}
+    <div>
+      <a href="{{project.pdfURL}}" target="_blank">See PDF File</a>
+    </div>
+   
+    <button class="btn-display-hide btn-edit" id="add_PDF" value="pdf" type="button" onclick="edit_form_field(value)">Edit/Delete
+      PDF</button>
+
+    {% else %}
+    <button class="btn-display-hide" id="add_PDF" value="pdf" type="button" onclick="edit_form_field(value)">Add
+      PDF</button>
+    {% endif %}
+  </div>
+
+</div>
+
+<div id="projectName-edit">
+  <form class="row g-3  border border-info-subtle">
+    {% csrf_token %}
+
+    {% include 'staff/form/edit-projectName.html' %}
+  </form>
+</div>
+
+<div id="description-edit">
+  <form class="row g-3 edit-description border border-info-subtle">
+    {% csrf_token %}
+
+    {% include 'staff/form/edit-description.html' %}
+  </form>
+</div>
+
+<div id="video-edit">
+  <form class="row g-3 edit-video border border-info-subtle">
+    {% csrf_token %}
+
+    {% include 'staff/form/edit-video.html' %}
+  </form>
+</div>
+ 
+<hr>
+
+{% block js %}
+<script src="{% static 'staff/js/publish_unpublish.js' %}"></script>
+<script src="{% static 'staff/js/single-project.js' %}"></script>
+<script src="{% static 'staff/js/delete-project.js' %}"></script>
+{% endblock js %}
+{% endblock content %}

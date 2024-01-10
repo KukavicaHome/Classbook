@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load static %}
+{% load embed_video_tags %}
+
+{% block content %}
+
+<div class="text-end">
+  {% if project.pdf %}
+    <a href="{{project.pdfURL}}" target="_blank">See PDF File</a>
+  {% endif %}
+  {% if project.quiz_published %}
+    <button class="btn-display-hide" id="" type="button" onclick="playQuiz()">Play <span id="quiz-samp">Quiz</span> </button>
+  {% endif %}
+  <!--<button class="btn-display-hide" id="" type="button" onclick="goHome()">Go Home</button>-->
+  <button class="btn-display-hide" id="add-see-question" type="button" onclick="createQuestion()">Add/See/Edit Comments</button>
+</div>
+
+<!--poruka o updejtovanju-->
+{% if message %}
+<div class="alert alert-dismissible fade show {% if message %}{{ message }}{% else %}alert-primary{% endif %}"
+  role="alert">
+  <p info-alert>{{message}}</p>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endif %}
+<!-- The project tags: -->
+<div id="project_div" class="">
+  <div class="box-class2 mt-3">
+    <div class="one">
+      <h3>{{project.projectName}}</h3>
+    </div>
+
+    <div class="three">
+      {% if jel_ti_se_svidza %}
+      <button class="btn liked" style="color: red;" id="{{project.id}}" value="{{project.num_of_likes}}"
+        onclick="likeHandler(id)"><i class="fa fa-heart"></i></button>
+      <span id="br_lajkova_{{project.id}}">{{ project.num_of_likes }}</span>
+      {% else %}<!--Isti, id za span i btn je isi  imamo jer se samo jedan pojavi-->
+      <button class="btn not-liked" style="color: black;" id="{{project.id}}" value="{{project.num_of_likes}}"
+        onclick="likeHandler(id)"><i class="fa fa-heart"></i></button>
+      <span id="br_lajkova_{{project.id}}">{{ project.num_of_likes }}</span>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="project-edit">
+    {% if project.description %}
+    <p>{{project.description}} </p>
+    {% endif %}
+  </div>
+
+ 
+
+  <div class="project-edit">
+    <!--{% if request.is_secure %}HTTPS{% else %}HTTP{% endif %}-->
+    {% video project.video as my_video %}
+    {{project.video.url}}
+    {% video my_video "medium" %}
+    {% endvideo %}
+  </div>
+
+
+</div>
+
+<hr>
+
+{% block js %}
+<script src="{% static 'class/js/current-project.js' %}"></script>
+{% endblock js %}
+{% endblock content %}

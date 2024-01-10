@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block content %}
+ 
+<ol>
+    {% for object in object_list %}
+        {% if object.projectName %}
+        <li>
+            <a href="{% url 'class:current-project' object.id %}">
+                {{ object.projectName }}</a>
+        </li>
+        
+        {% endif %}
+        {% empty %}
+        <h3>There is no result for '{{query}}' search!!</h3>
+    {% endfor %}
+    </ol>
+{% endblock content %}

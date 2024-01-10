@@ -1,0 +1,128 @@
+<!--csrf Za POST asihrono-->
+<div class="debugging" hidden>
+  <p id="csrf">{% csrf_token %}</p>
+</div>
+
+<div class="mb-3" id="div_id_projectName">
+  <label for="id_projectName" class="form-label"><strong>Project Name</strong> <em>*</em></label>
+  <div class="input-group has-validation">
+    <input type="text" class="form-control is-valid" name="projectName" id="id_projectName" maxlength="100" 
+    {% if projectName %} value="{{projectName}}" {% endif %} required 
+    placeholder="">
+    
+    <div class="invalid-feedback">
+      You must enter a Project Name.
+    </div>
+  </div>
+  {% if error_projectName %}
+  <div id="error_projectName" class="invalid-server-feedback">
+    Such a Project Name already exists.
+  </div>
+  {% endif %}
+  {% if error_projectName_length %}
+  <div id="error_projectName_length" class="invalid-server-feedback">
+    Project Name can have a maximum of 100 characters.
+  </div>
+  {% endif %}
+  <div class="invalid-feedback-client" id="izbor_projectName_alert" >
+  </div>
+</div>
+
+<div class="mb-3" id="div_id_description">
+  <label for="id_description" class="form-label">
+    <strong>Description</strong>   
+  </label>
+  <div class="input-group has-validation">
+    <textarea placeholder="The number of characters in the description must be less than 500!" class="form-control" id="id_description" name="description" cols="40" rows="6" maxlength="500">{% if description %} {{description}} {% endif %}</textarea>
+    <div class="invalid-feedback">
+      Your description has too many characters.
+    </div>
+  </div>
+  {% if error_description %}
+  <div id="error_description" class="invalid-server-feedback">
+    Your description has too many characters.
+  </div>
+  {% endif %}
+  <div class="invalid-feedback-client" id="izbor_descriptio_alert" ></div>
+</div>
+
+<div class="border border-info-subtle">
+  <div class="mb3" id="div_id_video">
+    <label for="id_video" class="form-label"> <strong>YouTube Video</strong>*
+    </label>
+  
+    <div class="input-group has-validation">
+      <input type="url" name="video" class="form-control is-valid" id="id_video" maxlength="100" {% if video %}
+        value="{{video}}" {% endif %}  required placeholder="Your video url must have the following form:
+        'https://www.youtube.com/watch?' + 'v=' + 'videoID'">
+      <div class="invalid-feedback">
+        Please choose a YouTube url.
+      </div>
+    </div>
+    <!--sa js evaluation-->
+    <div class="invalid-feedback-client" id="izbor_videa_alert" ></div>
+  </div>
+</div>
+
+<div class="border border-info-subtle">
+  <label for="id_pdf" class="form-label">
+    <strong>Pdf</strong>  <span class="span-info"  >
+      Your file must not be larger than 1 MB and the number of
+      characters in the name must be less than 30!</span>
+  </label>
+  <br>
+  {% if valid_pdf %}
+  <div id="valid-pdf-info" >
+    Your current pdf file: {{valid_pdf}}
+  </div>
+  {% endif %}
+  <input type="file" class="custom-file-input" id="id_pdf" name="pdf" accept="application/pdf" placeholder="hdhd">
+  <label class="custom-file-label" for="id_pdf" id="pdf_label">Choose file...</label>
+  <div class="invalid-feedback">Example invalid custom file feedback</div>
+  {% if error_pdf_maxSize or error_pdf_file_name_length or error_pdf_extension %}
+  <div>
+    Your invalid choice for pdf file: {{pdf}}
+  </div>
+  {% endif %}
+  {% if error_pdf_maxSize %}
+  <div id="error_pdf_maxSize" class="invalid-server-feedback">
+    The maximum file size that can be uploaded is 1 MB.
+  </div>
+  {% endif %}
+  {% if error_pdf_file_name_length %}
+  <div id="error_pdf_file_name_length" class="invalid-server-feedback">
+    Number of characters in the name must be less than 50!.
+  </div>
+  {% endif %}
+  {% if error_pdf_extension %}
+  <div id="error_pdf_extension" class="invalid-server-feedback">
+    .pdf is only allowed extension.
+  </div>
+  {% endif %}
+
+  <!--sa js evaluation-->
+  <div class="invalid-feedback-client" id="izbor_fajla_alert"></div>
+</div>
+<div><button id="clear_file" onclick="sakri_clear_file_btn()">Clear file</button></div>
+
+<div class="border border-info-subtle">
+  <div class="col-12">
+    <div class="form-check">
+      <label class="form-check-label" for="id_published">
+        <strong>Published</strong> 
+      </label>
+      <input class="form-check-input " type="checkbox" name="project_published" id="id_published" {% if project_published %}
+          value="{{project_published}}" {% endif %} checked="{{project_published}}" aria-describedby="invalidCheck3Feedback">
+      <div id="invalidCheck3Feedback" class="">
+        <span class="span-info" > You can later publish your project and thus enable students to use it. Until then,
+          ONLY YOU HAVE ACCESS TO YOUR PROJECT.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-auto">
+
+  <input type="submit" id="submit_id" class="btn btn-primary mb-3 create-update-project" name="forma" value="Submit">
+  <button type="reset" id="cancel_id" class="btn btn-secondary mb-3 create-update-project" onclick="cancelSubmit()">Cancel</button>
+</div>

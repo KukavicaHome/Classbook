@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+<!--csrf Za POST asihrono-->
+<div class="debugging" hidden>
+    <p id="csrf">{% csrf_token %}</p>
+</div>
+<div class="message" id="poruka"></div>
+{% if message %}
+<div class="alert alert-dismissible fade show {% if message %}{{ message }}{% else %}alert-primary{% endif %}" role="alert">  
+    <p style="color: brown;">{{message}}</p> 
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endif %}
+
+<div class="text-end">
+    <button class="btn-display-hide" id="go-home" type="button" onclick="goHome()">Go Home</button>
+</div>
+
+<form class="row g-3 needs-validation create-update-project" id="form" method="POST" action="" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    {% include 'staff/form/edit-pdf.html' %}
+</form>
+
+
+
+{% block js %}
+<script src="{% static 'staff/js/pdf_update.js' %}"></script>
+{% endblock js %}
+{% endblock content %}

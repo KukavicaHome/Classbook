@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block content %}
+
+<!--csrf Za POST asihrono-->
+<div class="debugging" hidden>
+  <p id="csrf">{% csrf_token %}</p>
+</div>
+
+<!--<img style="max-width: 200px; max-height: 200px;" src="{% static 'images/cat.jpg' %}" >-->
+
+
+<div class="text-end">
+  <button class="btn-display-hide" id="add-project" type="button" onclick="createProjectForm()">Create Project</button>
+</div>
+
+<div id="message_div">
+  {% if message %}
+  <div class="alert alert-dismissible fade show {% if message %}{{ message }}{% else %}alert-primary{% endif %}"
+    role="alert">
+    <p style="color: brown;">{{message}}</p>
+    <button type="button" id="alert_btn" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  {% endif %}
+</div>
+
+
+<div style="background-color:powderblue;" class="message" id="poruka"></div>
+<!--Starani/div za projects-->
+<div id="projects">
+  <!--Ovdje ubacujem poruke iz js-->
+  <h1>Projects:</h1>
+  {% if projects %}
+  <table class="table table-striped ">
+    <thead>
+      <tr>
+        <th scope="col">Project Title</th>
+        <th scope="col"> </th>
+        <th scope="col"> </th>
+        
+      </tr>
+    </thead>
+    {% for project in projects %}
+    <tbody id="project_{{project.id}}">
+      <tr class="p-2 bg-light" style="border-bottom: 1px solid black;">
+        <!--<td class="table-success"><a class="screen_size"  id ="{{project.id}}" href="#">{{project.projectName}} </a></td>-->
+        <td class="">
+          <div>{{project.projectName}} </div>
+        </td>
+        <!--<td  class=""><a  id = "video_id_{{project.id}}" style="color: blue;" class="btn btn-default" href="" onclick="showVideo(id)">{{project.projectName}}</a></td>-->
+        <td class="">
+          <button class="btn-display-hide project-id-button project_id_{{project.id}}" style="color: #007cae;" id=""
+            value="{{project.id}}" type="button" onclick="dipslayProject(value)">Visit</button>
+        <td class="">
+
+          <!-- Button trigger modal delete -->
+          <button type="button" class="btn-display-hide delete-button" data-bs-toggle="modal"
+            data-bs-target="#modal_delete_post_{{ project.id }}">
+            Delete
+          </button>
+          <!-- Modal za delite-->
+
+          <div class="modal fade" id="modal_delete_post_{{ project.id }}" tabindex="-1"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <p id="modal-body-question">Do you really want to delete the project: {{project.projectName}}?</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-danger" value="{{project.id}} "
+                    onclick="deleteProject(value)">Delete project</button>
+                </div>
+              </div>
+            </div>
+          </div>
+      </tr>
+    </tbody>
+
+    {% endfor %}
+  </table>
+  {% else %}
+  <div
+    class="alert  alert-dismissible fade show {% if message.tags %}{{ message.tags }}{% else %}alert-primary{% endif %}"
+    role="alert">
+    <h2>Project list is empty!!!</h2>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  {% endif %}
+</div>
+
+{% if message %}
+<script>var br = 0;
+  const message_div = document.getElementById('message_div');
+  const btn_close = document.getElementById('alert_btn');
+  btn_close.onclick = () => {
+    message_div.style.display = 'none';
+    console.log('kliknut sakri message')
+    br++;
+  }
+
+
+</script>
+{% endif %}
+{% block js %}
+<script src="{% static 'staff/js/publish_unpublish.js' %}"></script>
+<script src="{% static 'staff/js/delete-project.js' %}"></script>
+<script src="{% static 'staff/js/projects.js' %}"></script>
+{% endblock js %}
+
+{% endblock content %}

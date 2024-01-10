@@ -1,0 +1,122 @@
+.container {
+    width: 620px;
+    height: 349px;
+}
+
+#project_div{
+    margin-top: 20px;
+  }
+  
+
+.project-edit{
+    margin-top: 25px;
+    padding-bottom: 5px;
+  }
+
+#comment-post-div, .comment-div{
+    border: 1px solid rgb(219, 229, 231);
+    padding: 3px; 
+    margin-bottom: 3px; 
+    margin-TOP: 3PX; 
+    color: rgb(108, 108, 223); 
+    border-radius: 6px;
+  }
+
+.comment-div{
+  background-color: rgb(247, 244, 240);
+  margin-bottom: 5px;
+}
+#user-name{
+  color: black;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 1.4em;
+   
+}
+
+.content{
+  color: black;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-size: .95em;
+}
+  .btn-clipboard, .btn-edit-comment {
+    margin-top: 3px;
+    top: 0.65rem;
+    right: 0.65rem;
+    z-index: 10;
+     
+    padding: 0.25rem 0.5rem;
+    font-size: .75rem;
+    
+    color: yellow;
+    background-color: #0d6efd;
+    border: 1px solid;
+    border-radius: 0.25rem;
+}
+
+.delete-button{
+  background-color: red;
+}
+
+.invalid-feedback-client, .info-alert{
+  color: red;
+}
+
+textarea{
+  align-content:left; 
+  text-align:left;
+ 
+}
+
+#modal-body-question{
+  color: black;
+}
+ 
+.btn-display-hide {
+  margin-top: 3px;
+  border: none;
+  color: black;
+ 
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+   
+}
+
+.btn-display-hide:hover{
+  background-color: white;
+  color: brown;
+}
+
+#add-project, #go-home{
+  color: #0d9bfd;
+  background-color: white;
+}
+
+.btn-display-hide{
+  border: thin solid rgb(136, 233, 175);
+  border-radius: 6px;
+}
+
+#edit-comment-btn{
+  background-color: orange;
+  color: black;
+}
+
+.project-div{
+  border: thin solid rgb(237, 245, 240);
+  margin-top: 8px;
+}
+
+#submission-info{
+  margin-top: 15px;
+}
+#add-see-question, #go-home-comments{
+  background-color: #4f8fee;
+  color: yellow;
+}
+
+nav{
+  margin-top: 10px;
+}
+

@@ -1,0 +1,30 @@
+body {
+    padding: 10px;
+}
+
+.border-info-subtle{
+    width: 100%;
+    
+    border: 2px solid rgb(4, 163, 68);
+    padding: 10px;
+    margin-bottom: 3px; 
+    margin-top: 10px;
+    
+    border-radius: 6px;
+  }
+
+.invalid-feedback-client{
+    color: red;
+}
+
+.buttonHolder{ 
+    text-align: center; 
+}
+.vec-registriran{
+    margin-top: 10px;
+}
+
+#emailHelp{
+    padding-top: 0px;
+    margin-top: 0px;
+}

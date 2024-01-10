@@ -1,0 +1,18 @@
+<div class="mb-3" id="div_id_projectName">
+    <label for="id_projectName" class="form-label"><strong>Project Name</strong> <em>*</em></label>
+    <div class="input-group has-validation">
+        <input type="text" class="form-control is-valid" name="projectName" id="id_projectName" maxlength="100"     
+        {% if project.projectName %} value="{{project.projectName}}" {% endif %} required>
+        <div class="invalid-feedback">
+            You must enter a Project Name.
+        </div>
+    </div>
+    <div class="invalid-feedback-client" id="izbor_projectName_alert" >
+    </div>
+</div>
+
+<div class="col-auto">
+
+    <button type="button" id="" class="btn btn-primary mb-3 create-update-project" onclick="update_projectField()">Update</button>
+    <button type="reset" id="" class="btn btn-secondary mb-3 create-update-project" onclick="cancelSubmit()">Cancel</button>
+</div>

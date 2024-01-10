@@ -1,0 +1,20 @@
+<div class="mb-3" id="div_id_description">
+    <label for="id_description" class="form-label">
+        <strong>Description</strong> <span class="span-info"  >The number of characters in the
+            description must be less
+            than 500!</span>
+    </label>
+    <div class="input-group has-validation">
+        <textarea class="form-control" id="id_description" name="description" cols="40" rows="6" maxlength="500" >
+                {% if project.description %} {{project.description}} {% endif %}
+            </textarea>
+    </div>
+ 
+    <div class="invalid-feedback-client" id="izbor_descriptio_alert" ></div>
+</div>
+
+<div class="col-auto">
+
+    <button type="button" id="" class="btn btn-primary mb-3 create-update-project" onclick="update_projectField()">Update</button>
+    <button type="reset" id="" class="btn btn-secondary mb-3 create-update-project" onclick="cancelSubmit()">Cancel</button>
+</div>

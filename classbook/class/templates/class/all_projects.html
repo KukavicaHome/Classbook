@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block content %}
+<!--<img style="max-width: 200px; max-height: 200px;" src="{% static 'images/cat.jpg' %}" >-->
+ 
+<h1>Projects:</h1>
+ 
+{% if projects %}
+ 
+<div class="box-class2">
+  <div class="one"><h6>Project Title</h6></div>
+  <div class="three">#Likes</div>
+</div>
+
+<div class="all-posts">
+  {% for project in posts_of_the_page %}
+ 
+  {% if project.project_published %}
+  <div class="box-class2 project-div" >
+    <div class="one"><a href="{% url 'class:current-project' project.id %}">{{project.projectName}}   </a></div>
+    <div class="three">
+      {{ project.num_of_likes }}
+
+    </div>
+  </div>
+  {% endif %}
+{% endfor %}
+  {% else %}
+  <div class="alert  alert-dismissible fade show {% if message.tags %}{{ message.tags }}{% else %}alert-primary{% endif %}" role="alert">  
+    <h2>Project list is empty!!!</h2> 
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+{% endif %}
+</div>
+
+<nav aria-label="Page navigation example">
+  <ul class="pagination d-flex justify-content-center">
+    {% if posts_of_the_page.has_previous %}
+    <li class="page-item"><a class="page-link" href="?page={{posts_of_the_page.previous_page_number}}">Previous</a></li>
+    {% endif %}
+    {% if posts_of_the_page.has_next %}
+    <li class="page-item"><a class="page-link" href="?page={{posts_of_the_page.next_page_number}}">Next</a></li>
+    {% endif %}
+  </ul>
+</nav>
+
+{% block js %}  
+    
+{% endblock js %}
+
+{% endblock content %}

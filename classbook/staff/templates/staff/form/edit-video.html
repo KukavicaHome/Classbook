@@ -1,0 +1,26 @@
+<div class=" ">
+    <div class="mb3" id="div_id_video">
+        <label for="id_video" class="form-label"> <strong>YouTube Video</strong>*
+            <span class="span-info">Your video url must have the following form:
+                'https://www.youtube.com/watch?' + 'v=' + 'videoID'</span>
+        </label>
+
+        <div class="input-group has-validation">
+            <input type="url" name="video" class="form-control is-valid" id="id_video" maxlength="100" {% if project.video %}
+                value="{{project.video}}" {% endif %} required>
+            <div class="invalid-feedback">
+                Please choose a YouTube url.
+            </div>
+        </div>
+        <!--sa js evaluation-->
+        <div class="invalid-feedback-client" id="izbor_videa_alert"></div>
+    </div>
+</div>
+
+<div class="col-auto">
+
+    <button type="button" id="" class="btn btn-primary mb-3 create-update-project"
+        onclick="update_projectField()">Update</button>
+    <button type="reset" id="" class="btn btn-secondary mb-3 create-update-project"
+        onclick="cancelSubmit()">Cancel</button>
+</div>

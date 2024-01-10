@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="text-end">
+  <button class="btn-display-hide" id="add-project" type="button" onclick="goHome()">Go Home</button>
+</div>
+
+
+
+<div class="message"></div>
+{% if message %}
+<div class="alert  alert-dismissible fade show {% if message %}{{ message }}{% else %}alert-primary{% endif %}"
+  role="alert">
+  <p class="info-alert" >{{message}}</p>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endif %}
+
+
+<form class="row g-3 needs-validation create-update-project" method="POST" action="" enctype="multipart/form-data">
+  {% csrf_token %}
+  {% include 'staff/form/project-form-template.html' %}
+
+</form>
+
+{% block js %}
+<script src="{% static 'staff/js/create-project.js' %}"></script>
+{% endblock js %}
+<script>
+ 
+</script>
+{% endblock content %}
